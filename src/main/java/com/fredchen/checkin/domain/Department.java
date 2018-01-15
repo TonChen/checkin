@@ -14,7 +14,6 @@ import java.util.Set;
 
 @Data
 @Builder
-@MappedSuperclass
 @Entity
 @Table(name = "department")
 public class Department extends BaseModel {

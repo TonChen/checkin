@@ -1,6 +1,7 @@
 package com.fredchen.checkin.exception;
 
 import com.fredchen.checkin.common.constant.CodeEnum;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -11,9 +12,10 @@ import lombok.RequiredArgsConstructor;
  */
 
 @Data
+@AllArgsConstructor
 @NoArgsConstructor
-@RequiredArgsConstructor
 public class CommonException extends RuntimeException {
     private CodeEnum code;
     private String errorMessage;
 }
+

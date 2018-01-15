@@ -15,7 +15,6 @@ import java.util.Date;
 
 @Data
 @Entity
-@MappedSuperclass
 @Builder
 @Table
 public class Staff extends BaseModel {
