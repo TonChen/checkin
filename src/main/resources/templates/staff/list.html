@@ -2,86 +2,99 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>员工列表</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/bootstrap-responsive.min.css" />
+    <link rel="stylesheet" href="/css/uniform.css" />
+    <link rel="stylesheet" href="/css/select2.css" />
+    <link rel="stylesheet" href="/css/matrix-style.css" />
+    <link rel="stylesheet" href="/css/matrix-media.css" />
+    <link href="/font-awesome/css/font-awesome.css" rel="stylesheet" />
 </head>
 <body>
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>NAME</th>
-            <th>DESCRIPTION</th>
-        </tr>
-        <tr th:each="staff : ${staffs}">
-            <td th:text="${staff.id}">2</td>
-            <td th:text="${staff.name}">Onions</td>
-            <td th:text="${staff.description}">des</td>
-        </tr>
-    </table>
+<!--start-top-serch-->
+<div id="search">
+    <input type="text" placeholder="Search here..."/>
+    <button type="submit" class="tip-bottom" title="Search"><i class="icon-search icon-white"></i></button>
+</div>
+<!--close-top-serch-->
 
+<div id="content">
+    <div id="content-header">
+        <div id="breadcrumb"><a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a
+                href="#" class="current">Tables</a></div>
+        <h1>Tables</h1>
+    </div>
     <div class="container-fluid">
+        <hr/>
         <div class="row-fluid">
             <div class="span12">
-                <ul class="nav nav-tabs">
-                    <li class="active">
-                        <a href="#">首页</a>
-                    </li>
-                    <li>
-                        <a href="#">资料</a>
-                    </li>
-                    <li class="disabled">
-                        <a href="#">信息</a>
-                    </li>
-                    <li class="dropdown pull-right">
-                        <a href="#" data-toggle="dropdown" class="dropdown-toggle">下拉<strong class="caret"></strong></a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="#">操作</a>
-                            </li>
-                            <li>
-                                <a href="#">设置栏目</a>
-                            </li>
-                            <li>
-                                <a href="#">更多设置</a>
-                            </li>
-                            <li class="divider">
-                            </li>
-                            <li>
-                                <a href="#">分割线</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-                <div class="btn-group">
-                    <button class="btn" type="button"><em class="icon-align-left"></em></button> <button class="btn" type="button"><em class="icon-align-center"></em></button> <button class="btn" type="button"><em class="icon-align-right"></em></button> <button class="btn" type="button"><em class="icon-align-justify"></em></button>
-                </div>
-                <div class="pagination">
-                    <ul>
-                        <li>
-                            <a href="#">上一页</a>
-                        </li>
-                        <li>
-                            <a href="#">1</a>
-                        </li>
-                        <li>
-                            <a href="#">2</a>
-                        </li>
-                        <li>
-                            <a href="#">3</a>
-                        </li>
-                        <li>
-                            <a href="#">4</a>
-                        </li>
-                        <li>
-                            <a href="#">5</a>
-                        </li>
-                        <li>
-                            <a href="#">下一页</a>
-                        </li>
-                    </ul>
+                <div class="widget-box">
+                    <div class="widget-title"><span class="icon"><i class="icon-th"></i></span>
+                        <h5>Data table</h5>
+                    </div>
+                    <div class="widget-content nopadding">
+                        <table class="table table-bordered data-table">
+                            <thead>
+                            <tr>
+                                <th>Rendering engine</th>
+                                <th>Browser</th>
+                                <th>Platform(s)</th>
+                                <th>Engine version</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="gradeX">
+                                <td>Trident</td>
+                                <td>Internet
+                                    Explorer 4.0
+                                </td>
+                                <td>Win 95+</td>
+                                <td class="center">4</td>
+                            </tr>
+                            <tr class="gradeC">
+                                <td>Trident</td>
+                                <td>Internet
+                                    Explorer 5.0
+                                </td>
+                                <td>Win 95+</td>
+                                <td class="center">5</td>
+                            </tr>
+                            <tr class="gradeA">
+                                <td>Trident</td>
+                                <td>Internet
+                                    Explorer 5.5
+                                </td>
+                                <td>Win 95+</td>
+                                <td class="center">5.5</td>
+                            </tr>
+                            <tr class="gradeA">
+                                <td>Trident</td>
+                                <td>Internet
+                                    Explorer 6
+                                </td>
+                                <td>Win 98+</td>
+                                <td class="center">6</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
 </body>
+<script src="/webjars/jquery/jquery.min.js"></script>
+<script src="/js/jquery.ui.custom.js"></script>
+<script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+<script src="/js/jquery.uniform.js"></script>
+<script src="/js/select2.min.js"></script>
+<script src="/js/jquery.dataTables.min.js"></script>
+<script src="/js/matrix.js"></script>
+<script src="/js/matrix.tables.js"></script>
 </html>
