@@ -2,9 +2,8 @@ package com.fredchen.checkin.dao;
 
 import com.fredchen.checkin.domain.Staff;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -20,4 +19,11 @@ public interface StaffDao extends JpaRepository<Staff, Integer> {
     List<Staff> queryDepartmentId(Integer depId);
 
 
+    @Query("update Staff s set s.isDel = 1 where s.department.id = ?1 ")
+    @Modifying
+    void deleteByDepId(Integer id);
+
+    @Query("update Staff s set s.isDel = 1 where s.id = ?1")
+    @Modifying
+    void deleteById(Integer id);
 }

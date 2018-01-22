@@ -11,4 +11,12 @@ import java.util.List;
 public interface IStaffService {
 
     List<Staff> withDepartmentId(Integer depId);
+
+    Staff findById(Integer id);
+
+    Staff save(Staff staff);
+
+    Staff update(Staff sta);
+
+    void deleteById(Integer id);
 }

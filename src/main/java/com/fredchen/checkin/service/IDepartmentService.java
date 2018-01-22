@@ -10,5 +10,13 @@ import java.util.List;
  */
 public interface IDepartmentService {
 
-    List<Department> findByIsDel(int isDel);
+    List<Department> findByIsDel(boolean isDel);
+
+    Department findById(Integer id);
+
+    void deleteById(Integer id);
+
+    Department save(Department department);
+
+    Department update(Department department);
 }
