@@ -33,23 +33,25 @@
                     <div class="navbar navbar-inner block-header">
                         <div class="muted pull-left">部门列表</div>
                     </div>
+                    <form th:action="@{/upload/uploadCSV}" enctype="multipart/form-data" method="post" >
+                        <div class="btn-group">
+                            <div class="controls">
+                                <div class="uploader" id="uniform-fileInput"><input class="input-file uniform_on" id="fileInput" name="file" type="file" /><span class="filename" style="user-select: none;">No file selected</span><span class="action" style="user-select: none;">选择文件(CSV)</span></div>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <div class="controls">
+                                <select class="span6 m-wrap" id="importDepId" name="importDepId" style="width: 13%;">
+                                    <option th:each="dep : ${deps}" th:value="${dep.id}" th:text="${dep.name}"></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="">
+                            <button type="submit" class="btn btn-primary">上传</button>
+                        </div>
+                    </form>
                     <div class="block-content collapse in">
                         <div class="span12">
-                            <div class="table-toolbar">
-                                <div class="btn-group">
-                                    <a href="#" th:href="@{/staff/create(depId=${depId})}"><button class="btn btn-success">新增<i class="icon-plus icon-white"></i></button></a>
-                                    <div class="controls">
-                                        <div class="uploader" id="uniform-fileInput"><input class="input-file uniform_on" id="fileInput" type="file" /><span class="filename" style="user-select: none;">No file selected</span><span class="action" style="user-select: none;">选择文件(CSV)</span></div>
-                                    </div>
-                                </div>
-                                <div class="btn-group pull-right">
-                                    <button data-toggle="dropdown" class="btn dropdown-toggle">Tools <span class="caret"></span></button>
-                                    <ul class="dropdown-menu">
-                                        <!--<li><a href="#">导出</a></li>-->
-                                    </ul>
-                                </div>
-                            </div>
-
                             <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="example2">
                                 <thead>
                                 <tr>
@@ -78,7 +80,11 @@
                                     <td class="center" th:text="${staff.absence ? '是' : '否'}">否</td>
                                     <td class="center" th:text="${staff.description}"></td>
                                     <td class="center" th:text="${#dates.format(staff.createTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
-                                    <td> <a href="update.html" th:href="@{/staff/update(id=${staff.id},depId=${depId})}">修改</a>   <a href="#" th:href="@{/staff/delete(id=${staff.id},depId=${depId})}">删除</a> <a href="#" th:href="@{/staff/checkIn(id=${staff.id})}">签到</a> </td>
+                                    <td><a href="#" th:href="@{/staff/create(depId=${depId})}">新增</a>
+                                        <a href="update.html" th:href="@{/staff/update(id=${staff.id},depId=${depId})}">修改</a>
+                                        <a href="#" th:href="@{/staff/delete(id=${staff.id},depId=${depId})}">删除</a>
+                                                <!--<a href="#" th:href="@{/staff/checkIn(id=${staff.id})}">签到</a>-->
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -103,11 +109,6 @@
     $(function() {
 
     });
-    
-    function doImport() {
-        
-    }
-    
 </script>
 </body>
 </html>

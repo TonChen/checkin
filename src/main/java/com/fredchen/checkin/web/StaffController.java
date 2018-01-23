@@ -1,5 +1,6 @@
 package com.fredchen.checkin.web;
 
+import com.fredchen.checkin.base.BaseController;
 import com.fredchen.checkin.domain.Staff;
 import com.fredchen.checkin.service.IDepartmentService;
 import com.fredchen.checkin.service.IStaffService;
@@ -22,7 +23,7 @@ import java.util.Date;
 
 @Controller
 @RequestMapping("/staff")
-public class StaffController {
+public class StaffController extends BaseController {
 
     @Autowired
     private IStaffService staffService;
@@ -31,8 +32,9 @@ public class StaffController {
 
     @GetMapping("/list")
     public Object list(@RequestParam(name = "depId", defaultValue = "1") Integer depId, Model model){
-
+        val deps = departmentService.findByIsDel(false);
         val staffs = staffService.withDepartmentId(depId);
+        model.addAttribute("deps", deps);
         model.addAttribute("staffs", staffs);
         model.addAttribute("depId", depId);
 

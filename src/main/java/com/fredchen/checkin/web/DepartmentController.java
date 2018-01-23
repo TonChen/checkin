@@ -1,5 +1,6 @@
 package com.fredchen.checkin.web;
 
+import com.fredchen.checkin.base.BaseController;
 import com.fredchen.checkin.domain.Department;
 import com.fredchen.checkin.service.impl.DepartmentService;
 import lombok.val;
@@ -21,7 +22,7 @@ import java.util.Date;
 
 @Controller
 @RequestMapping("/dep")
-public class DepartmentController {
+public class DepartmentController extends BaseController {
 
     @Autowired
     private DepartmentService departmentService;
