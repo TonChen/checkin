@@ -41,6 +41,15 @@ public class StaffController extends BaseController {
         return "staff/list";
     }
 
+    @PostMapping("/show")
+    public String show(@RequestParam(name = "depId", defaultValue = "1") Integer depId, Model model) {
+        val deps = departmentService.findByIsDel(false);
+        val staffs = staffService.withDepartmentId(depId);
+        model.addAttribute("deps", deps);
+        model.addAttribute("staffs", staffs);
+        model.addAttribute("depId", depId);
+        return "display/list";
+    }
 
     @GetMapping("/create")
     public String create(Model model, @RequestParam("depId") Integer depId) {

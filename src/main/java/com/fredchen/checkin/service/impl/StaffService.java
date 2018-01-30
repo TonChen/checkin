@@ -23,6 +23,9 @@ public class StaffService implements IStaffService {
 
     @Override
     public List<Staff> withDepartmentId(Integer depId){
+        if(depId == null){
+            return staffDao.findByIsDel(false);
+        }
         return staffDao.queryDepartmentId(depId);
     }
 
