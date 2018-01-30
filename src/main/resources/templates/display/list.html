@@ -19,26 +19,19 @@
 
 <div class="container-fluid">
     <div class="row-fluid">
-        <div class="span3" id="sidebar">
-            <ul class="nav nav-list bs-docs-sidenav nav-collapse collapse">
-                <li>
-                    <a href="list.html" th:href="@{/dep/list}"><i class="icon-chevron-right"></i>部门列表</a>
-                </li>
-            </ul>
-        </div>
         <div class="span9" id="content">
             <div class="row-fluid">
                 <!-- block -->
                 <div class="block">
                     <div class="navbar navbar-inner block-header">
-                        <div class="muted pull-left">部门列表</div>
+                        <div class="muted pull-left">列表</div>
                     </div>
-                    <form th:action="@{/staff/show}"  method="post" >
+                    <form th:action="@{/staff/show}" >
                         <div class="control-group">
                             <div class="controls">
                                 <select class="span6 m-wrap" id="depId" name="depId" style="width: 13%;">
                                     <option value="">--请选择--</option>
-                                    <option th:each="dep : ${deps}" th:value="${dep.id}" th:text="${dep.name}"></option>
+                                    <option th:each="dep : ${deps}" th:value="${dep.id}" th:text="${dep.name}" th:selected="(${dep.id == depId})"></option>
                                 </select>
                             </div>
                         </div>
@@ -73,11 +66,11 @@
                                     <td class="center" th:text="${staff.address}"></td>
                                     <td class="center" th:text="${staff.telephone}"></td>
                                     <td class="center" th:text="${staff.checkInTime}"></td>
-                                    <td class="center" th:text="${staff.absence ? '是' : '否'}">否</td>
+                                    <td class="center" th:id="'isAbsence'+${staff.id}" th:text="${staff.absence ? '是' : '否'}">否</td>
                                     <td class="center" th:text="${staff.description}"></td>
                                     <td class="center" th:text="${#dates.format(staff.createTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
                                     <td>
-                                        <a href="#" th:href="@{/staff/checkIn(id=${staff.id})}">签到</a>
+                                        <a href="javascript:void(0);" th:onclick="'javascript:checkIn(this, \''+ ${staff.id} + '\')'" >签到</a>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -101,8 +94,18 @@
 <script src="/assets/DT_bootstrap.js"></script>
 <script>
     $(function() {
-
+        $("#example2_filter").hide();
     });
+
+    function checkIn(e, staffId) {
+        $.post("/staff/checkIn", {isAbsence : $("#isAbsence"+staffId).text(), id:staffId } ,function(data){
+            if(data){
+                $("#isAbsence"+staffId).text(data);
+                $(e).parent().prev().prev().prev().html(data);
+            }
+        });
+    }
+
 </script>
 </body>
 </html>

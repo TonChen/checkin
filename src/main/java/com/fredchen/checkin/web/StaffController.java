@@ -4,15 +4,13 @@ import com.fredchen.checkin.base.BaseController;
 import com.fredchen.checkin.domain.Staff;
 import com.fredchen.checkin.service.IDepartmentService;
 import com.fredchen.checkin.service.IStaffService;
+import lombok.NonNull;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 
@@ -42,7 +40,7 @@ public class StaffController extends BaseController {
     }
 
     @RequestMapping("/show")
-    public String show(@RequestParam(name = "depId", defaultValue = "1") Integer depId, Model model) {
+    public String show(@RequestParam(name = "depId", required = false) Integer depId, Model model) {
         val deps = departmentService.findByIsDel(false);
         val staffs = staffService.withDepartmentId(depId);
         model.addAttribute("deps", deps);
@@ -52,7 +50,7 @@ public class StaffController extends BaseController {
     }
 
     @GetMapping("/create")
-    public String create(Model model, @RequestParam("depId") Integer depId) {
+    public String create(Model model, @RequestParam("depId") @NonNull Integer depId) {
         val deps = departmentService.findByIsDel(false);
         model.addAttribute("deps", deps);
         model.addAttribute("depId", depId);
@@ -97,6 +95,21 @@ public class StaffController extends BaseController {
     public String delete(@RequestParam("id") Integer id, Model model, @RequestParam("depId") Integer depId) {
         staffService.deleteById(id);
         return "redirect:list?depId="+depId;
+    }
+
+    /**
+     * 签到
+     * @param id
+     * @return
+     */
+    @RequestMapping("/checkIn")
+    @ResponseBody
+    @Transactional
+    public String checkIn(@RequestParam @NonNull Integer id, @RequestParam(name = "isAbsence") String isAbsence) {
+        val staff = staffService.findById(id);
+        staff.setAbsence("是".equals(isAbsence)?false:true);
+        Staff sta = staffService.update(staff);
+        return sta.getAbsence()?"是":"否";
     }
 
 }

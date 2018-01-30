@@ -51,8 +51,7 @@ public class UploadController {
         val dep = departmentService.findById(importDepId);
 
         List<DataRow> dataRowList = dataRows.get();
-        for (int i = 0; i < dataRowList.size(); i++) {
-            DataRow dataRow = dataRowList.get(i);
+        for (DataRow dataRow : dataRowList) {
             int size = dataRow.getDataCells().size();
             String name = getData(dataRow, size, 0);
             String sex = getData(dataRow, size, 1).equals("男") ? "1" : "0";
@@ -82,7 +81,6 @@ public class UploadController {
             return "";
         }
         DataCell dataCell = dataRow.getDataCells().get(i);
-        String data = dataCell.getDataString();
-        return data;
+        return dataCell.getDataString();
     }
 }
