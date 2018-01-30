@@ -12,6 +12,7 @@ import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,7 +31,7 @@ import java.util.Optional;
  * @Date: 2018/1/23 10:03
  */
 
-@RestController
+@Controller
 @RequestMapping("/upload")
 @Slf4j
 public class UploadController {
@@ -41,7 +42,7 @@ public class UploadController {
     private IDepartmentService departmentService;
 
     //处理文件上传
-    @PostMapping(value = "/uploadCSV")
+    @RequestMapping(value = "/uploadCSV")
     public String uploadCSV(@RequestParam("file") @NonNull MultipartFile file, @RequestParam("importDepId") Integer importDepId) throws Exception {
 
         DataRecord dataRecord = ExcelUtil.importAsCsv(file.getInputStream(), "GB2312");
@@ -73,7 +74,7 @@ public class UploadController {
             staffService.save(staff);
         }
 
-        return "uploadCSV success";
+        return "redirect:/staff/list?depId="+importDepId;
     }
 
     private String getData(DataRow dataRow, int size, int i) {
