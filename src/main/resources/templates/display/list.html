@@ -69,8 +69,9 @@
                                     <td class="center" th:id="'isAbsence'+${staff.id}" th:text="${staff.absence ? '是' : '否'}">否</td>
                                     <td class="center" th:text="${staff.description}"></td>
                                     <td class="center" th:text="${#dates.format(staff.createTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
-                                    <td>
-                                        <a href="javascript:void(0);" th:onclick="'javascript:checkIn(this, \''+ ${staff.id} + '\')'" >签到</a>
+                                    <td th:switch="${staff.absence}">
+                                        <a th:case="true" href="javascript:void(0);" th:onclick="'javascript:checkIn(this, \''+ ${staff.id} + '\')'"> 签到 </a>
+                                        <a th:case="false" href="javascript:void(0);" th:onclick="'javascript:checkIn(this, \''+ ${staff.id} + '\')'"> 取消 </a>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -101,11 +102,11 @@
         $.post("/staff/checkIn", {isAbsence : $("#isAbsence"+staffId).text(), id:staffId } ,function(data){
             if(data){
                 $("#isAbsence"+staffId).text(data);
+                $(e).text("是" == data ? "签到" : "取消" );
                 $(e).parent().prev().prev().prev().html(data);
             }
         });
     }
-
 </script>
 </body>
 </html>
