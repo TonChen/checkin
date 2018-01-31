@@ -29,6 +29,7 @@ public class Staff extends BaseModel {
     private String address;
     private String telephone;
     private String description;
+    private String fudaoType;
 
     /**
      * 是否缺席
@@ -124,5 +125,13 @@ public class Staff extends BaseModel {
 
     public void setClassRoom(ClassRoom classRoom) {
         this.classRoom = classRoom;
+    }
+
+    public String getFudaoType() {
+        return fudaoType;
+    }
+
+    public void setFudaoType(String fudaoType) {
+        this.fudaoType = fudaoType;
     }
 }

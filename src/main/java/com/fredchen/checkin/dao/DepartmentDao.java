@@ -18,4 +18,6 @@ public interface DepartmentDao extends JpaRepository<Department, Integer> {
     @Query("update Department d set d.isDel = 1 where d.id = ?1")
     @Modifying
     void deleteById(Integer id);
+
+    Department findByName(String depName);
 }

@@ -18,4 +18,6 @@ public interface ClassRoomDao extends JpaRepository<ClassRoom, Integer> {
     @Query("update ClassRoom c set c.isDel = 1 where c.id = ?1")
     @Modifying
     void deleteById(Integer id);
+
+    ClassRoom findByName(String depName);
 }

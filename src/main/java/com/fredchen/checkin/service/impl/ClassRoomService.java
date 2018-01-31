@@ -50,4 +50,9 @@ public class ClassRoomService implements IClassRoomService {
     public ClassRoom update(ClassRoom classRoom) {
         return save(classRoom);
     }
+
+    @Override
+    public ClassRoom findByName(String depName) {
+        return classRoomDao.findByName(depName);
+    }
 }

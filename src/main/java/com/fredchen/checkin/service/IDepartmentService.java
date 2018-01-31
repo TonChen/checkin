@@ -19,4 +19,6 @@ public interface IDepartmentService {
     Department save(Department department);
 
     Department update(Department department);
+
+    Department findByName(String depName);
 }

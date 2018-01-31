@@ -19,4 +19,6 @@ public interface IClassRoomService {
     ClassRoom save(ClassRoom classRoom);
 
     ClassRoom update(ClassRoom classRoom);
+
+    ClassRoom findByName(String depName);
 }

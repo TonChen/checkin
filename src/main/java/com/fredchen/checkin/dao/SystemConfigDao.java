@@ -18,4 +18,6 @@ public interface SystemConfigDao extends JpaRepository<SystemConfig, Integer> {
     @Query("update SystemConfig s set s.isDel = 1 where s.id = ?1")
     @Modifying
     void deleteById(Integer id);
+
+    SystemConfig findByCode(String code);
 }

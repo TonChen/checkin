@@ -52,4 +52,9 @@ public class SystemConfigService implements ISystemConfigService {
     public SystemConfig update(SystemConfig systemConfig) {
         return save(systemConfig);
     }
+
+    @Override
+    public SystemConfig findByCode(String code) {
+        return systemConfigDao.findByCode(code);
+    }
 }

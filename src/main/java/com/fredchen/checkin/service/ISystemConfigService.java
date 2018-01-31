@@ -19,4 +19,6 @@ public interface ISystemConfigService {
     SystemConfig save(SystemConfig systemConfig);
 
     SystemConfig update(SystemConfig systemConfig);
+
+    SystemConfig findByCode(String code);
 }

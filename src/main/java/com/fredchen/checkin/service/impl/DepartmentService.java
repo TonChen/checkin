@@ -48,4 +48,9 @@ public class DepartmentService implements IDepartmentService {
     public Department update(Department department) {
         return save(department);
     }
+
+    @Override
+    public Department findByName(String depName) {
+        return departmentDao.findByName(depName);
+    }
 }
