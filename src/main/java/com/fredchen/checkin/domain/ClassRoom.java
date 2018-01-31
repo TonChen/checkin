@@ -31,7 +31,7 @@ public class ClassRoom extends BaseModel {
         this.description = description;
     }
 
-    @OneToMany(mappedBy = "classroom")
+    @OneToMany(mappedBy = "classRoom")
     private Set<Staff> staffs;
 
     public Integer getId() {

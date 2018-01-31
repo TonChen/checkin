@@ -24,7 +24,7 @@ public class SystemConfig extends BaseModel {
     private Integer type;
     private String value;
 
-    @OneToMany(mappedBy = "system_config")
+    @OneToMany(mappedBy = "systemConfig")
     private Set<SystemConfigDetail> systemConfigDetails;
 
     public Integer getId() {
