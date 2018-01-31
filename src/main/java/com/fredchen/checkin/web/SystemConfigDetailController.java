@@ -62,6 +62,8 @@ public class SystemConfigDetailController extends BaseController {
     @PostMapping("/saveOrUpdate")
     public String saveOrUpdate(SystemConfigDetail configDetail, @RequestParam("configId") Integer configId, @RequestParam("systemConfigId") Integer systemConfigId) {
         val systemConfig = systemConfigService.findById(systemConfigId);
+        configDetail.setType(systemConfig.getType());
+        configDetail.setCode(systemConfig.getCode());
         if (configDetail.getId() == null) {
             configDetail.setIsDel(false);
             configDetail.setCreateTime(new Date());
@@ -70,11 +72,9 @@ public class SystemConfigDetailController extends BaseController {
         } else {
             val detail = configDetailService.findById(configDetail.getId());
             detail.setName(configDetail.getName());
-            detail.setCode(configDetail.getCode());
             detail.setExtra(configDetail.getExtra());
             detail.setRemark(configDetail.getRemark());
             detail.setValue(configDetail.getValue());
-            detail.setType(configDetail.getType());
             detail.setSystemConfig(systemConfig);
             configDetailService.update(detail);
         }
@@ -85,7 +85,7 @@ public class SystemConfigDetailController extends BaseController {
     @Transactional
     public String delete(@RequestParam("id") Integer id, @RequestParam("configId") Integer configId) {
         configDetailService.deleteById(id);
-        return "redirect:list?configId="+configId;
+        return "redirect:list?configId=" + configId;
     }
 
 

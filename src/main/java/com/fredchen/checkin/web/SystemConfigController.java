@@ -1,6 +1,8 @@
 package com.fredchen.checkin.web;
 
 import com.fredchen.checkin.base.BaseController;
+import com.fredchen.checkin.common.constant.CodeEnum;
+import com.fredchen.checkin.common.constant.TypeEnum;
 import com.fredchen.checkin.domain.ClassRoom;
 import com.fredchen.checkin.domain.SystemConfig;
 import com.fredchen.checkin.service.IClassRoomService;
@@ -50,14 +52,14 @@ public class SystemConfigController extends BaseController {
 
     @PostMapping("/saveOrUpdate")
     public String saveOrUpdate(SystemConfig systemConfig) {
+        systemConfig.setType(TypeEnum.SYSTEM_CONFIG_TYPE_FUDAO.getType());
+        systemConfig.setCode(CodeEnum.SYSTEM_CONFIG_CODE_FUDAO.getCode());
         if (systemConfig.getId() == null) {
             systemConfig.setIsDel(false);
             systemConfig.setCreateTime(new Date());
         } else {
             val config = configService.findById(systemConfig.getId());
             config.setName(systemConfig.getName());
-            config.setCode(systemConfig.getCode());
-            config.setType(systemConfig.getType());
             config.setValue(systemConfig.getValue());
         }
         configService.save(systemConfig);
