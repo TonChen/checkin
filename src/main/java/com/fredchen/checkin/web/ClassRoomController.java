@@ -1,8 +1,8 @@
 package com.fredchen.checkin.web;
 
 import com.fredchen.checkin.base.BaseController;
-import com.fredchen.checkin.domain.Department;
-import com.fredchen.checkin.service.IDepartmentService;
+import com.fredchen.checkin.domain.ClassRoom;
+import com.fredchen.checkin.service.IClassRoomService;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,15 +21,15 @@ import java.util.Date;
  */
 
 @Controller
-@RequestMapping("/dep")
-public class DepartmentController extends BaseController {
+@RequestMapping("/classRoom")
+public class ClassRoomController extends BaseController {
 
     @Autowired
-    private IDepartmentService departmentService;
+    private IClassRoomService classRoomServicce;
 
     @GetMapping("/list")
     public String list(Model model) {
-        val deps = departmentService.findByIsDel(false);
+        val deps = classRoomServicce.findByIsDel(false);
         model.addAttribute("deps", deps);
         return "department/list";
     }
@@ -37,27 +37,27 @@ public class DepartmentController extends BaseController {
 
     @GetMapping("/create")
     public String create(Model model) {
-        return "department/create";
+        return "classRoom/create";
     }
 
     @GetMapping("/update")
     public String update(@RequestParam("id") Integer id, Model model) {
-        val dep = departmentService.findById(id);
+        val dep = classRoomServicce.findById(id);
         model.addAttribute("dep",dep);
-        return "department/update";
+        return "classRoom/update";
     }
 
     @PostMapping("/saveOrUpdate")
-    public String saveOrUpdate(Department department) {
-        if(department.getId() == null){
-            department.setIsDel(false);
-            department.setCreateTime(new Date());
-            departmentService.save(department);
+    public String saveOrUpdate(ClassRoom classRoom) {
+        if(classRoom.getId() == null){
+            classRoom.setIsDel(false);
+            classRoom.setCreateTime(new Date());
+            classRoomServicce.save(classRoom);
         }else{
-            val dep = departmentService.findById(department.getId());
-            dep.setDescription(department.getDescription());
-            dep.setName(department.getName());
-            departmentService.update(dep);
+            val room = classRoomServicce.findById(classRoom.getId());
+            room.setDescription(classRoom.getDescription());
+            room.setName(classRoom.getName());
+            classRoomServicce.update(room);
         }
         return "redirect:list";
     }
@@ -65,7 +65,7 @@ public class DepartmentController extends BaseController {
     @GetMapping("/delete")
     @Transactional
     public String delete(@RequestParam("id") Integer id) {
-        departmentService.deleteById(id);
+        classRoomServicce.deleteById(id);
         return "redirect:list";
     }
 

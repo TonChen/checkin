@@ -38,7 +38,9 @@
                     <div class="block-content collapse in">
                         <div class="span12">
                             <!-- BEGIN FORM-->
-                            <form th:action="@{/dep/saveOrUpdate}" id="form_sample_1" method="post" class="form-horizontal">
+                            <form th:action="@{/configDetail/saveOrUpdate}" id="form_sample_1" method="post" class="form-horizontal">
+                                <input type="hidden"  name="configId" id="configId" th:value="${configId}"/>
+                                <input type="hidden"  name="id" id="id" th:value="${detail.id}"/>
                                 <fieldset>
                                     <div class="alert alert-error hide">
                                         <button class="close" data-dismiss="alert"></button>
@@ -51,13 +53,30 @@
                                     <div class="control-group">
                                         <label class="control-label">名称<span class="required">*</span></label>
                                         <div class="controls">
-                                            <input type="text"  name="name" data-required="1" class="span6 m-wrap"/>
+                                            <input type="text" th:value="${detail.name}"  name="name" data-required="1" class="span6 m-wrap"/>
                                         </div>
                                     </div>
                                     <div class="control-group">
-                                        <label class="control-label">备注<span class="required">*</span></label>
+                                        <label class="control-label">类型<span class="required">*</span></label>
                                         <div class="controls">
-                                            <input name="description" type="text" class="span6 m-wrap"/>
+                                            <select id="systemConfigId" name="systemConfigId" class="span6 m-wrap">
+                                                <option th:each="config : ${configs}" th:value="${detail.id}"
+                                                        th:text="${config.name}"
+                                                        th:selected="(${config.id == detail.systemConfig.id})">
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label class="control-label">取值</label>
+                                        <div class="controls">
+                                            <input name="address" th:value="${detail.value}" type="text" class="span6 m-wrap"/>
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label class="control-label">备注</label>
+                                        <div class="controls">
+                                            <input name="remark" th:value="${detail.remark}" type="text" class="span6 m-wrap"/>
                                         </div>
                                     </div>
                                     <div class="form-actions">
@@ -131,7 +150,7 @@
     });
 
     function cancel() {
-        window.location.href = "/dep/list";
+        window.location.href = "/staff/list?depId="+$("#depId").val();
     }
 
 </script>

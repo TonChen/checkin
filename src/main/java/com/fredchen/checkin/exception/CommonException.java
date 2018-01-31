@@ -1,10 +1,9 @@
 package com.fredchen.checkin.exception;
 
-import com.fredchen.checkin.common.constant.CodeEnum;
+import com.fredchen.checkin.common.constant.MessageEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 /**
  * @Author: fredchen
@@ -15,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CommonException extends RuntimeException {
-    private CodeEnum code;
+    private MessageEnum code;
     private String errorMessage;
 }
 

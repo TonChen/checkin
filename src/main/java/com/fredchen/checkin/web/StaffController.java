@@ -58,7 +58,7 @@ public class StaffController extends BaseController {
     }
 
     @GetMapping("/update")
-    public String update(@RequestParam(name = "id", defaultValue = "1") Integer id, Model model, @RequestParam("depId") Integer depId) {
+    public String update(@RequestParam(name = "id") Integer id, Model model, @RequestParam("depId") Integer depId) {
         val staff = staffService.findById(id);
         val deps = departmentService.findByIsDel(false);
         model.addAttribute("deps", deps);
@@ -92,7 +92,7 @@ public class StaffController extends BaseController {
 
     @GetMapping("/delete")
     @Transactional
-    public String delete(@RequestParam("id") Integer id, Model model, @RequestParam("depId") Integer depId) {
+    public String delete(@RequestParam("id") Integer id, @RequestParam("depId") Integer depId) {
         staffService.deleteById(id);
         return "redirect:list?depId="+depId;
     }

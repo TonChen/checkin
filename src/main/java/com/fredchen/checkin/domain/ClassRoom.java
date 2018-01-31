@@ -1,8 +1,6 @@
 package com.fredchen.checkin.domain;
 
 import com.fredchen.checkin.base.BaseModel;
-import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -10,14 +8,13 @@ import java.util.Set;
 
 /**
  * @Author: fredchen
- * @Date: 2018/1/15 17:39
- * 班级
+ * @Date: 2018/1/31 15:15
  */
 
 @Entity
 @NoArgsConstructor
-@Table(name = "department")
-public class Department extends BaseModel {
+@Table(name = "class_room")
+public class ClassRoom extends BaseModel {
 
     @Id
     @GeneratedValue
@@ -26,16 +23,16 @@ public class Department extends BaseModel {
     private String code;
     private String description;
 
-    @OneToMany(mappedBy = "department")
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    @OneToMany(mappedBy = "class_room")
     private Set<Staff> staffs;
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
 
     public Integer getId() {
         return id;
@@ -53,12 +50,12 @@ public class Department extends BaseModel {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
+    public String getCode() {
+        return code;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public Set<Staff> getStaffs() {

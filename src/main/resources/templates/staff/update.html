@@ -20,7 +20,9 @@
         <div class="span3" id="sidebar">
             <ul class="nav nav-list bs-docs-sidenav nav-collapse collapse">
                 <li>
-                    <a href="list.html" th:href="@{/dep/list}"><i class="icon-chevron-right"></i>部门列表</a>
+                    <a  th:href="@{/dep/list}"><i class="icon-chevron-right"></i>班级列表</a>
+                    <a  th:href="@{/classRoom/list}"><i class="icon-chevron-right"></i>教室列表</a>
+                    <a  th:href="@{/config/list}"><i class="icon-chevron-right"></i>配置列表</a>
                 </li>
             </ul>
         </div>
@@ -55,12 +57,12 @@
                                         </div>
                                     </div>
                                     <div class="control-group">
-                                        <label class="control-label">部门<span class="required">*</span></label>
+                                        <label class="control-label">班级<span class="required">*</span></label>
                                         <div class="controls">
                                             <select id="departmentId" name="departmentId" class="span6 m-wrap">
                                                 <option th:each="dep : ${deps}" th:value="${dep.id}"
                                                         th:text="${dep.name}"
-                                                        th:selected="(${dep.id == staff.department.id})">测试部
+                                                        th:selected="(${dep.id == staff.department.id})">
                                                 </option>
                                             </select>
                                         </div>
