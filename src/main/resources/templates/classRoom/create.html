@@ -38,7 +38,7 @@
                     <div class="block-content collapse in">
                         <div class="span12">
                             <!-- BEGIN FORM-->
-                            <form th:action="@{/dep/saveOrUpdate}" id="form_sample_1" method="post" class="form-horizontal">
+                            <form th:action="@{/classRoom/saveOrUpdate}" id="form_sample_1" method="post" class="form-horizontal">
                                 <fieldset>
                                     <div class="alert alert-error hide">
                                         <button class="close" data-dismiss="alert"></button>
@@ -49,7 +49,13 @@
                                         Your form validation is successful!
                                     </div>
                                     <div class="control-group">
-                                        <label class="control-label">名称<span class="required">*</span></label>
+                                        <label class="control-label">编码</label>
+                                        <div class="controls">
+                                            <input type="text"  name="code" data-required="1" class="span6 m-wrap"/>
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label class="control-label">名称</label>
                                         <div class="controls">
                                             <input type="text"  name="name" data-required="1" class="span6 m-wrap"/>
                                         </div>
@@ -131,7 +137,7 @@
     });
 
     function cancel() {
-        window.location.href = "/dep/list";
+        window.location.href = "/classRoom/list";
     }
 
 </script>

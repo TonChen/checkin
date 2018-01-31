@@ -41,6 +41,11 @@ public class Staff extends BaseModel {
     @JoinColumn(name = "dep_id")
     private Department department;
 
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "classroom_id")
+    private ClassRoom classRoom;
+
     public Integer getId() {
         return id;
     }
@@ -111,5 +116,13 @@ public class Staff extends BaseModel {
 
     public void setDepartment(Department department) {
         this.department = department;
+    }
+
+    public ClassRoom getClassRoom() {
+        return classRoom;
+    }
+
+    public void setClassRoom(ClassRoom classRoom) {
+        this.classRoom = classRoom;
     }
 }

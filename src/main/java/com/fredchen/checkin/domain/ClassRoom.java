@@ -13,7 +13,7 @@ import java.util.Set;
 
 @Entity
 @NoArgsConstructor
-@Table(name = "class_room")
+@Table(name = "classroom")
 public class ClassRoom extends BaseModel {
 
     @Id
@@ -31,7 +31,7 @@ public class ClassRoom extends BaseModel {
         this.description = description;
     }
 
-    @OneToMany(mappedBy = "class_room")
+    @OneToMany(mappedBy = "classroom")
     private Set<Staff> staffs;
 
     public Integer getId() {

@@ -29,9 +29,9 @@ public class ClassRoomController extends BaseController {
 
     @GetMapping("/list")
     public String list(Model model) {
-        val deps = classRoomServicce.findByIsDel(false);
-        model.addAttribute("deps", deps);
-        return "department/list";
+        val rooms = classRoomServicce.findByIsDel(false);
+        model.addAttribute("rooms", rooms);
+        return "classRoom/list";
     }
 
 
@@ -42,8 +42,8 @@ public class ClassRoomController extends BaseController {
 
     @GetMapping("/update")
     public String update(@RequestParam("id") Integer id, Model model) {
-        val dep = classRoomServicce.findById(id);
-        model.addAttribute("dep",dep);
+        val room = classRoomServicce.findById(id);
+        model.addAttribute("room", room);
         return "classRoom/update";
     }
 
@@ -57,6 +57,7 @@ public class ClassRoomController extends BaseController {
             val room = classRoomServicce.findById(classRoom.getId());
             room.setDescription(classRoom.getDescription());
             room.setName(classRoom.getName());
+            room.setCode(classRoom.getCode());
             classRoomServicce.update(room);
         }
         return "redirect:list";
