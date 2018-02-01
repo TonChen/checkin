@@ -29,16 +29,17 @@
                     <form th:action="@{/staff/show}" >
                         <div class="control-group">
                             <div class="controls">
+                                班级：
                                 <select class="span6 m-wrap" id="depId" name="depId" style="width: 13%;">
                                     <option value="">--请选择--</option>
                                     <option th:each="dep : ${deps}" th:value="${dep.id}" th:text="${dep.name}" th:selected="(${dep.id == depId})"></option>
                                 </select>
-
+                                教室：
                                 <select class="span6 m-wrap" id="roomId" name="roomId" style="width: 13%;">
                                     <option value="">--请选择--</option>
                                     <option th:each="room : ${rooms}" th:value="${room.id}" th:text="${room.name}" th:selected="(${room.id == roomId})"></option>
                                 </select>
-
+                                是否请假：
                                 <select class="span6 m-wrap" id="isAbsence" name="isAbsence" style="width: 13%;">
                                     <option value="">--请选择--</option>
                                     <option value="true" th:selected="${isAbsence == true}">是</option>

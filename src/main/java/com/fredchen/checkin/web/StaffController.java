@@ -14,6 +14,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 /**
  * @Author: fredchen
@@ -32,24 +35,30 @@ public class StaffController extends BaseController {
     private IClassRoomService classRoomService;
 
     @RequestMapping("/list")
-    public Object list(@RequestParam(name = "depId", required = false) Integer depId, @RequestParam(required = false) Integer roomId, Model model){
+    public Object list(@RequestParam(required = false) Boolean isAbsence, @RequestParam(name = "depId", required = false) Integer depId, @RequestParam(required = false) Integer roomId, Model model){
         val deps = departmentService.findByIsDel(false);
         val rooms = classRoomService.findByIsDel(false);
-        val staffs = staffService.withDepartmentId(depId, roomId);
+        List<Staff> staffs = staffService.withDepartmentId(depId, roomId);
+        if(isAbsence != null){
+            staffs = staffs.stream().filter(n -> n.getAbsence().equals(isAbsence)).collect(Collectors.toList());
+        }
         model.addAttribute("deps", deps);
         model.addAttribute("staffs", staffs);
         model.addAttribute("rooms", rooms);
         model.addAttribute("depId", depId);
         model.addAttribute("roomId", roomId);
-
+        model.addAttribute("isAbsence", isAbsence);
         return "staff/list";
     }
 
     @RequestMapping("/show")
-    public String show(@RequestParam Boolean isAbsence ,@RequestParam(name = "depId", required = false) Integer depId, @RequestParam(name = "roomId", required = false) Integer roomId, Model model) {
+    public String show(@RequestParam(required = false) Boolean isAbsence, @RequestParam(name = "depId", required = false) Integer depId, @RequestParam(required = false) Integer roomId, Model model) {
         val deps = departmentService.findByIsDel(false);
         val rooms = classRoomService.findByIsDel(false);
-        val staffs = staffService.withDepartmentId(depId, roomId);
+        List<Staff> staffs = staffService.withDepartmentId(depId, roomId);
+        if(isAbsence != null){
+            staffs = staffs.stream().filter(n -> n.getAbsence().equals(isAbsence)).collect(Collectors.toList());
+        }
         model.addAttribute("deps", deps);
         model.addAttribute("staffs", staffs);
         model.addAttribute("depId", depId);

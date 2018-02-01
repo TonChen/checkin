@@ -79,7 +79,7 @@ public class LeaveInfoController extends BaseController {
             leaveInfoService.update(info);
         }
         staffService.update(staff);
-        return "redirect:/staff/list";
+        return "redirect:/staff/show";
     }
 
     @GetMapping("/delete")
