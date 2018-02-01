@@ -46,12 +46,16 @@ public class StaffController extends BaseController {
     }
 
     @RequestMapping("/show")
-    public String show(@RequestParam(name = "depId", required = false) Integer depId, Model model) {
+    public String show(@RequestParam Boolean isAbsence ,@RequestParam(name = "depId", required = false) Integer depId, @RequestParam(name = "roomId", required = false) Integer roomId, Model model) {
         val deps = departmentService.findByIsDel(false);
-        val staffs = staffService.withDepartmentId(depId, null);
+        val rooms = classRoomService.findByIsDel(false);
+        val staffs = staffService.withDepartmentId(depId, roomId);
         model.addAttribute("deps", deps);
         model.addAttribute("staffs", staffs);
         model.addAttribute("depId", depId);
+        model.addAttribute("rooms", rooms);
+        model.addAttribute("roomId", roomId);
+        model.addAttribute("isAbsence", isAbsence);
         return "display/list";
     }
 
@@ -119,6 +123,7 @@ public class StaffController extends BaseController {
     public String checkIn(@RequestParam @NonNull Integer id, @RequestParam(name = "isAbsence") String isAbsence) {
         val staff = staffService.findById(id);
         staff.setAbsence("是".equals(isAbsence)?false:true);
+        staff.setCheckInTime(new Date());
         Staff sta = staffService.update(staff);
         return sta.getAbsence()?"是":"否";
     }

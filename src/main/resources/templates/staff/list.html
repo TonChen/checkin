@@ -41,7 +41,7 @@
                         <div class="btn-group">
                             <div class="controls">
                                 <div class="uploader" id="uniform-fileInput"><input class="input-file uniform_on" id="fileInput" name="file" type="file" /><span class="filename" style="user-select: none;">No file selected</span><span class="action" style="user-select: none;">选择文件(CSV)</span></div>
-                                <button type="submit" class="btn btn-primary">上传</button>
+                                <button type="submit" class="btn btn-primary">上传(CSV格式)</button>
                             </div>
                         </div>
                     </form>
@@ -61,7 +61,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="btn-group">
+                        <div class="btn-group" style="argin-left: 1%;">
                             &nbsp; <a href="#" th:href="@{/staff/list}"><button class="btn btn-warning">查询<i class="icon-search icon-white"></i></button></a>
                         </div>
                     </form>
@@ -84,7 +84,7 @@
                                     <th>地址</th>
                                     <th>电话</th>
                                     <th>签到时间</th>
-                                    <th>是否缺席</th>
+                                    <th>是否请假</th>
                                     <th>备注</th>
                                     <th>创建时间</th>
                                     <th>操作</th>
@@ -104,7 +104,9 @@
                                     <td class="center" th:text="${staff.absence ? '是' : '否'}">否</td>
                                     <td class="center" th:text="${staff.description}"></td>
                                     <td class="center" th:text="${#dates.format(staff.createTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
-                                    <td><a href="#" th:href="@{/staff/create(depId=${depId})}">新增</a>
+                                    <td>
+                                        <a href="#" th:href="@{/leaveInfo/list(staffId=${staff.id})}">查看请假</a>
+                                        <a href="#" th:href="@{/staff/create(depId=${depId})}">新增</a>
                                         <a href="update.html" th:href="@{/staff/update(id=${staff.id})}">修改</a>
                                         <a href="#" th:href="@{/staff/delete(id=${staff.id})}">删除</a>
                                                 <!--<a href="#" th:href="@{/staff/checkIn(id=${staff.id})}">签到</a>-->

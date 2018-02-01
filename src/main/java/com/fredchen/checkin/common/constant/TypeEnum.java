@@ -9,7 +9,6 @@ public enum TypeEnum {
     SYSTEM_CONFIG_TYPE_FUDAO(1000, "辅导类型");
 
 
-
     private Integer type;
     private String description;
 

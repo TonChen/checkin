@@ -33,6 +33,17 @@
                                     <option value="">--请选择--</option>
                                     <option th:each="dep : ${deps}" th:value="${dep.id}" th:text="${dep.name}" th:selected="(${dep.id == depId})"></option>
                                 </select>
+
+                                <select class="span6 m-wrap" id="roomId" name="roomId" style="width: 13%;">
+                                    <option value="">--请选择--</option>
+                                    <option th:each="room : ${rooms}" th:value="${room.id}" th:text="${room.name}" th:selected="(${room.id == roomId})"></option>
+                                </select>
+
+                                <select class="span6 m-wrap" id="isAbsence" name="isAbsence" style="width: 13%;">
+                                    <option value="">--请选择--</option>
+                                    <option value="true" th:selected="${isAbsence == true}">是</option>
+                                    <option value="false" th:selected="${isAbsence == false}">否</option>
+                                </select>
                             </div>
                         </div>
                         <div class="">
@@ -46,12 +57,13 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>班级</th>
+                                    <th>教室</th>
                                     <th>姓名</th>
                                     <th>性别</th>
                                     <th>地址</th>
                                     <th>电话</th>
                                     <th>签到时间</th>
-                                    <th>是否缺席</th>
+                                    <th>是否请假</th>
                                     <th>备注</th>
                                     <th>创建时间</th>
                                     <th>操作</th>
@@ -60,8 +72,9 @@
                                 <tbody>
                                 <tr class="gradeX" th:each="staff,state : ${staffs}">
                                     <td class="center" th:number="${staff.id}">1</td>
-                                    <td class="center" th:text="${staff.department.name}">开发部</td>
-                                    <td class="center" th:text="${staff.name}">张三</td>
+                                    <td class="center" th:text="${staff.department.name}"></td>
+                                    <td class="center" th:text="${staff.classRoom.name}"></td>
+                                    <td class="center" th:text="${staff.name}"></td>
                                     <td class="center" th:text="${staff.sex == 1 ? '男' : '女'}">男</td>
                                     <td class="center" th:text="${staff.address}"></td>
                                     <td class="center" th:text="${staff.telephone}"></td>
@@ -71,7 +84,8 @@
                                     <td class="center" th:text="${#dates.format(staff.createTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
                                     <td th:switch="${staff.absence}">
                                         <a th:case="true" href="javascript:void(0);" th:onclick="'javascript:checkIn(this, \''+ ${staff.id} + '\')'"> 签到 </a>
-                                        <a th:case="false" href="javascript:void(0);" th:onclick="'javascript:checkIn(this, \''+ ${staff.id} + '\')'"> 取消 </a>
+                                        <a th:case="false" data-toggle="modal" th:href="@{/leaveInfo/create(staffId=${staff.id})}" > 请假 </a>
+                                        <!--th:onclick="'javascript:checkIn(this, \''+ ${staff.id} + '\')'"-->
                                     </td>
                                 </tr>
                                 </tbody>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>新增</title>
+    <meta charset="UTF-8" />
+    <!-- Bootstrap -->
+    <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
+    <link href="/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" media="screen"/>
+    <link href="/assets/styles.css" rel="stylesheet" media="screen"/>
+    <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="/vendors/flot/excanvas.min.js"></script><![endif]-->
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <script src="/vendors/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row-fluid">
+        <!--<div class="span3" id="sidebar">-->
+            <!--<ul class="nav nav-list bs-docs-sidenav nav-collapse collapse">-->
+                <!--<li>-->
+                    <!--<a  th:href="@{/dep/list}"><i class="icon-chevron-right"></i>班级列表</a>-->
+                    <!--<a  th:href="@{/classRoom/list}"><i class="icon-chevron-right"></i>教室列表</a>-->
+                    <!--<a  th:href="@{/staff/list}"><i class="icon-chevron-right"></i>学生列表</a>-->
+                    <!--<a  th:href="@{/config/list}"><i class="icon-chevron-right"></i>配置列表</a>-->
+                <!--</li>-->
+            <!--</ul>-->
+        <!--</div>-->
+        <!--/span-->
+        <div class="span9" id="content">
+            <!-- validation -->
+            <div class="row-fluid">
+                <!-- block -->
+                <div class="block">
+                    <div class="navbar navbar-inner block-header">
+                        <div class="muted pull-left">请假</div>
+                    </div>
+                    <div class="block-content collapse in">
+                        <div class="span12">
+                            <!-- BEGIN FORM-->
+                            <form th:action="@{/leaveInfo/saveOrUpdate}" id="form_sample_1" method="post" class="form-horizontal">
+                                <input type="hidden" th:value="${staffId}" id="staffId" name="staffId" />
+                                <fieldset>
+                                    <div class="alert alert-error hide">
+                                        <button class="close" data-dismiss="alert"></button>
+                                        You have some form errors. Please check below.
+                                    </div>
+                                    <div class="alert alert-success hide">
+                                        <button class="close" data-dismiss="alert"></button>
+                                        Your form validation is successful!
+                                    </div>
+                                    <div class="control-group">
+                                        <label class="control-label">标题</label>
+                                        <div class="controls">
+                                            <input type="text"  name="title" data-required="1" class="span6 m-wrap"/>
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label class="control-label">请假类型<span class="required">*</span></label>
+                                        <div class="controls">
+                                            <select id="type" name="type" class="span6 m-wrap">
+                                                <option th:each="data:${map}" th:value="${data.key}" th:text="${data.value}"></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label class="control-label">内容</label>
+                                        <div class="controls">
+                                            <textarea name="content" class="span6 m-wrap"></textarea>
+                                            <!--<input name="content" type="text" class="span6 m-wrap"/>-->
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label class="control-label">备注</label>
+                                        <div class="controls">
+                                            <input name="remark" type="text" class="span6 m-wrap"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-actions">
+                                        <button type="submit" class="btn btn-primary">提交</button>
+                                        <button type="button" class="btn" onclick="cancel();">取消</button>
+                                    </div>
+                                </fieldset>
+                            </form>
+                            <!-- END FORM-->
+                        </div>
+                    </div>
+                </div>
+                <!-- /block -->
+            </div>
+            <!-- /validation -->
+        </div>
+    </div>
+    <hr/>
+</div>
+<!--/.fluid-container-->
+<link href="/vendors/datepicker.css" rel="stylesheet" media="screen"/>
+<link href="/vendors/uniform.default.css" rel="stylesheet" media="screen"/>
+<link href="/vendors/chosen.min.css" rel="stylesheet" media="screen"/>
+
+<link href="/vendors/wysiwyg/bootstrap-wysihtml5.css" rel="stylesheet" media="screen" />
+
+<script src="/vendors/jquery-1.9.1.js"></script>
+<script src="/bootstrap/js/bootstrap.min.js"></script>
+<script src="/vendors/jquery.uniform.min.js"></script>
+<script src="/vendors/chosen.jquery.min.js"></script>
+<script src="/vendors/bootstrap-datepicker.js"></script>
+
+<script src="/vendors/wysiwyg/wysihtml5-0.3.0.js"></script>
+<script src="/vendors/wysiwyg/bootstrap-wysihtml5.js"></script>
+
+<script src="/vendors/wizard/jquery.bootstrap.wizard.min.js"></script>
+
+<script src="/assets/scripts.js"></script>
+<script>
+
+    function cancel() {
+        window.location.href = "/staff/show";
+    }
+
+</script>
+</body>
+
+</html>
