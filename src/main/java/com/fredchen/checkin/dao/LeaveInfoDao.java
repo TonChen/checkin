@@ -21,6 +21,6 @@ public interface LeaveInfoDao extends JpaRepository<LeaveInfo, Integer> {
 
     LeaveInfo findByType(Integer type);
 
-    @Query("select o from LeaveInfo o where o.isDel = 0 and o.staff.id = ?1 order by o.createTime desc ")
+    @Query(value = "select * from leave_info o where o.is_del = 0 and o.staff_id = ?1 order by o.create_time DESC ", nativeQuery = true)
     List<LeaveInfo> findByStaffId(Integer staffId);
 }

@@ -98,7 +98,7 @@
                                 </thead>
                                 <tbody>
                                 <tr class="gradeX" th:each="staff,state : ${staffs}">
-                                    <td class="center" th:number="${staff.id}">1</td>
+                                    <td class="center" th:text="${staff.id}"></td>
                                     <td class="center" th:text="${staff.department.name}"></td>
                                     <td class="center" th:text="${staff.classRoom.name}"></td>
                                     <td class="center" th:text="${staff.name}">张三</td>

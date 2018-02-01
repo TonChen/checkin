@@ -29,6 +29,8 @@
                     <form th:action="@{/staff/show}" >
                         <div class="control-group">
                             <div class="controls">
+                                名称：
+                                <input type="text" th:value="${name}" name="name" data-required="1" class="span6 m-wrap"/>
                                 班级：
                                 <select class="span6 m-wrap" id="depId" name="depId" style="width: 13%;">
                                     <option value="">--请选择--</option>
@@ -63,29 +65,30 @@
                                     <th>性别</th>
                                     <th>地址</th>
                                     <th>电话</th>
-                                    <th>签到时间</th>
                                     <th>是否请假</th>
                                     <th>备注</th>
+                                    <th>签到时间</th>
                                     <th>创建时间</th>
                                     <th>操作</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr class="gradeX" th:each="staff,state : ${staffs}">
-                                    <td class="center" th:number="${staff.id}">1</td>
+                                    <td class="center" th:text="${staff.id}"></td>
                                     <td class="center" th:text="${staff.department.name}"></td>
                                     <td class="center" th:text="${staff.classRoom.name}"></td>
                                     <td class="center" th:text="${staff.name}"></td>
                                     <td class="center" th:text="${staff.sex == 1 ? '男' : '女'}">男</td>
                                     <td class="center" th:text="${staff.address}"></td>
                                     <td class="center" th:text="${staff.telephone}"></td>
-                                    <td class="center" th:text="${staff.checkInTime}"></td>
-                                    <td class="center" th:id="'isAbsence'+${staff.id}" th:text="${staff.absence ? '是' : '否'}">否</td>
+                                    <td class="center" th:id="'isAbsence'+${staff.id}" th:if="${staff.absence}"><span style="color: red;">是</span></td>
+                                    <td class="center" th:id="'isAbsence'+${staff.id}" th:unless="${staff.absence}"><span style="color: black;">否</span></td>
                                     <td class="center" th:text="${staff.description}"></td>
+                                    <td class="center" th:text="${staff.checkInTime}"></td>
                                     <td class="center" th:text="${#dates.format(staff.createTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
-                                    <td th:switch="${staff.absence}">
-                                        <a th:case="true" href="javascript:void(0);" th:onclick="'javascript:checkIn(this, \''+ ${staff.id} + '\')'"> 签到 </a>
-                                        <a th:case="false" data-toggle="modal" th:href="@{/leaveInfo/create(staffId=${staff.id})}" > 请假 </a>
+                                    <td class="center">
+                                        <a href="#" th:onclick="'javascript:checkIn(this, \''+ ${staff.id} + '\')'"> 签到 </a>
+                                        <a href="#" th:href="@{/leaveInfo/create(staffId=${staff.id})}" > 请假 </a>
                                         <!--th:onclick="'javascript:checkIn(this, \''+ ${staff.id} + '\')'"-->
                                     </td>
                                 </tr>
@@ -114,11 +117,11 @@
     });
 
     function checkIn(e, staffId) {
-        $.post("/staff/checkIn", {isAbsence : $("#isAbsence"+staffId).text(), id:staffId } ,function(data){
+        $.post("/staff/checkIn", {isAbsence : "否", id:staffId }, function(data){
             if(data){
                 $("#isAbsence"+staffId).text(data);
-                $(e).text("是" == data ? "签到" : "取消" );
-                $(e).parent().prev().prev().prev().html(data);
+                $(e).parent().prev().prev().prev().prev().children().html(data);
+                $(e).parent().prev().prev().prev().prev().children().css("color", "black");
             }
         });
     }

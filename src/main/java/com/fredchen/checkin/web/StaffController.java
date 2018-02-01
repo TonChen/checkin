@@ -1,6 +1,7 @@
 package com.fredchen.checkin.web;
 
 import com.fredchen.checkin.base.BaseController;
+import com.fredchen.checkin.common.util.ObjectUtil;
 import com.fredchen.checkin.domain.Staff;
 import com.fredchen.checkin.service.IClassRoomService;
 import com.fredchen.checkin.service.IDepartmentService;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 /**
@@ -52,12 +52,15 @@ public class StaffController extends BaseController {
     }
 
     @RequestMapping("/show")
-    public String show(@RequestParam(required = false) Boolean isAbsence, @RequestParam(name = "depId", required = false) Integer depId, @RequestParam(required = false) Integer roomId, Model model) {
+    public String show(@RequestParam(required = false) String name, @RequestParam(required = false) Boolean isAbsence, @RequestParam(name = "depId", required = false) Integer depId, @RequestParam(required = false) Integer roomId, Model model) {
         val deps = departmentService.findByIsDel(false);
         val rooms = classRoomService.findByIsDel(false);
         List<Staff> staffs = staffService.withDepartmentId(depId, roomId);
         if(isAbsence != null){
             staffs = staffs.stream().filter(n -> n.getAbsence().equals(isAbsence)).collect(Collectors.toList());
+        }
+        if(!ObjectUtil.isEmpty(name)){
+            staffs = staffs.stream().filter(n -> n.getName().contains(name)).collect(Collectors.toList());
         }
         model.addAttribute("deps", deps);
         model.addAttribute("staffs", staffs);
@@ -65,6 +68,7 @@ public class StaffController extends BaseController {
         model.addAttribute("rooms", rooms);
         model.addAttribute("roomId", roomId);
         model.addAttribute("isAbsence", isAbsence);
+        model.addAttribute("name", name);
         return "display/list";
     }
 
@@ -131,7 +135,7 @@ public class StaffController extends BaseController {
     @Transactional
     public String checkIn(@RequestParam @NonNull Integer id, @RequestParam(name = "isAbsence") String isAbsence) {
         val staff = staffService.findById(id);
-        staff.setAbsence("是".equals(isAbsence)?false:true);
+        staff.setAbsence("是".equals(isAbsence));
         staff.setCheckInTime(new Date());
         Staff sta = staffService.update(staff);
         return sta.getAbsence()?"是":"否";
