@@ -2,6 +2,7 @@ package com.fredchen.checkin.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fredchen.checkin.base.BaseModel;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -14,6 +15,7 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 @Table
+@EqualsAndHashCode(callSuper = true)
 public class LeaveInfo extends BaseModel {
 
     @Id
