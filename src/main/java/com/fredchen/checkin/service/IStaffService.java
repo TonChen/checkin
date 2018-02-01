@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface IStaffService {
 
-    List<Staff> withDepartmentId(Integer depId);
+    List<Staff> withDepartmentId(Integer depId, Integer roomId);
 
     Staff findById(Integer id);
 

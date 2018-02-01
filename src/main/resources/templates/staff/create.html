@@ -22,7 +22,8 @@
                 <li>
                     <a  th:href="@{/dep/list}"><i class="icon-chevron-right"></i>班级列表</a>
                     <a  th:href="@{/classRoom/list}"><i class="icon-chevron-right"></i>教室列表</a>
-                    <a  th:href="@{/config/list}"><i class="icon-chevron-right"></i>配置列表</a>
+                    <a  th:href="@{/staff/list}"><i class="icon-chevron-right"></i>学生列表</a>
+                    <!--<a  th:href="@{/config/list}"><i class="icon-chevron-right"></i>配置列表</a>-->
                 </li>
             </ul>
         </div>
@@ -39,7 +40,6 @@
                         <div class="span12">
                             <!-- BEGIN FORM-->
                             <form th:action="@{/staff/saveOrUpdate}" id="form_sample_1" method="post" class="form-horizontal">
-                                <input type="hidden"  name="depId" id="depId" th:value="${depId}"/>
                                 <fieldset>
                                     <div class="alert alert-error hide">
                                         <button class="close" data-dismiss="alert"></button>
@@ -60,8 +60,17 @@
                                         <div class="controls">
                                             <select id="departmentId" name="departmentId" class="span6 m-wrap">
                                                 <option th:each="dep : ${deps}" th:value="${dep.id}"
-                                                        th:text="${dep.name}"
-                                                        th:selected="(${dep.id == depId})">
+                                                        th:text="${dep.name}">
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label class="control-label">教室<span class="required">*</span></label>
+                                        <div class="controls">
+                                            <select id="classroomId" name="classroomId" class="span6 m-wrap">
+                                                <option th:each="room : ${rooms}" th:value="${room.id}"
+                                                        th:text="${room.name}">
                                                 </option>
                                             </select>
                                         </div>
@@ -76,19 +85,25 @@
                                         </div>
                                     </div>
                                     <div class="control-group">
-                                        <label class="control-label">电话<span class="required">*</span></label>
+                                        <label class="control-label">辅导类型</label>
+                                        <div class="controls">
+                                            <input name="fudaoType" type="text" class="span6 m-wrap"/>
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label class="control-label">电话</label>
                                         <div class="controls">
                                             <input name="telephone" type="text" class="span6 m-wrap"/>
                                         </div>
                                     </div>
                                     <div class="control-group">
-                                        <label class="control-label">地址<span class="required">*</span></label>
+                                        <label class="control-label">地址</label>
                                         <div class="controls">
                                             <input name="address" type="text" class="span6 m-wrap"/>
                                         </div>
                                     </div>
                                     <div class="control-group">
-                                        <label class="control-label">备注<span class="required">*</span></label>
+                                        <label class="control-label">备注</label>
                                         <div class="controls">
                                             <input name="description" type="text" class="span6 m-wrap"/>
                                         </div>
@@ -164,7 +179,7 @@
     });
 
     function cancel() {
-        window.location.href = "/staff/list?depId="+$("#depId").val();
+        window.location.href = "/staff/list";
     }
 
 </script>

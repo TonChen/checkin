@@ -22,7 +22,8 @@
                 <li>
                     <a  th:href="@{/dep/list}"><i class="icon-chevron-right"></i>班级列表</a>
                     <a  th:href="@{/classRoom/list}"><i class="icon-chevron-right"></i>教室列表</a>
-                    <a  th:href="@{/config/list}"><i class="icon-chevron-right"></i>配置列表</a>
+                    <a  th:href="@{/staff/list}"><i class="icon-chevron-right"></i>学生列表</a>
+                    <!--<a  th:href="@{/config/list}"><i class="icon-chevron-right"></i>配置列表</a>-->
                 </li>
             </ul>
         </div>
@@ -39,7 +40,6 @@
                         <div class="span12">
                             <!-- BEGIN FORM-->
                             <form th:action="@{/staff/saveOrUpdate}" id="form_sample_1" method="post" class="form-horizontal">
-                                <input type="hidden"  name="depId" id="depId" th:value="${depId}"/>
                                 <input type="hidden"  name="id" id="id" th:value="${staff.id}"/>
                                 <fieldset>
                                     <div class="alert alert-error hide">
@@ -68,28 +68,45 @@
                                         </div>
                                     </div>
                                     <div class="control-group">
-                                        <label class="control-label">性别<span class="required">*</span></label>
+                                        <label class="control-label">教室<span class="required">*</span></label>
                                         <div class="controls">
-                                            <select id="sex" name="sex" class="span6 m-wrap">
-                                                <option value="1" th:selected="(${staff.sex == 0})">女</option>
-                                                <option value="0" th:selected="(${staff.sex == 1})">男</option>
+                                            <select id="classroomId" name="classroomId" class="span6 m-wrap">
+                                                <option th:each="room : ${rooms}" th:value="${room.id}"
+                                                        th:text="${room.name}"
+                                                        th:selected="(${room.id == staff.classRoom.id})">
+                                                </option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="control-group">
-                                        <label class="control-label">电话<span class="required">*</span></label>
+                                        <label class="control-label">性别<span class="required">*</span></label>
+                                        <div class="controls">
+                                            <select id="sex" name="sex" class="span6 m-wrap">
+                                                <option value="0" th:selected="(${staff.sex == 0})">女</option>
+                                                <option value="1" th:selected="(${staff.sex == 1})">男</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label class="control-label">辅导类型</label>
+                                        <div class="controls">
+                                            <input name="fudaoType" type="text" th:value="${staff.fudaoType}" class="span6 m-wrap"/>
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label class="control-label">电话</label>
                                         <div class="controls">
                                             <input name="telephone" th:value="${staff.telephone}" type="text" class="span6 m-wrap"/>
                                         </div>
                                     </div>
                                     <div class="control-group">
-                                        <label class="control-label">地址<span class="required">*</span></label>
+                                        <label class="control-label">地址</label>
                                         <div class="controls">
                                             <input name="address" th:value="${staff.address}" type="text" class="span6 m-wrap"/>
                                         </div>
                                     </div>
                                     <div class="control-group">
-                                        <label class="control-label">备注<span class="required">*</span></label>
+                                        <label class="control-label">备注</label>
                                         <div class="controls">
                                             <input name="description" th:value="${staff.description}" type="text" class="span6 m-wrap"/>
                                         </div>
@@ -165,7 +182,7 @@
     });
 
     function cancel() {
-        window.location.href = "/staff/list?depId="+$("#depId").val();
+        window.location.href = "/staff/list";
     }
 
 </script>

@@ -28,4 +28,10 @@ public interface StaffDao extends JpaRepository<Staff, Integer> {
     void deleteById(Integer id);
 
     List<Staff> findByIsDel(boolean isDel);
+
+    @Query("select s from Staff s where s.isDel = 0 and s.classRoom.id = ?1 ")
+    List<Staff> queryByRoomId(Integer roomId);
+
+    @Query("select s from Staff s where s.isDel = 0 and s.classRoom.id = ?1 and  s.department.id = ?2 ")
+    List<Staff> findByRoomIdAndDepId(Integer roomId, Integer depId);
 }

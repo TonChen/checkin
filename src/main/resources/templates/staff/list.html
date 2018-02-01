@@ -24,7 +24,8 @@
                 <li>
                     <a  th:href="@{/dep/list}"><i class="icon-chevron-right"></i>班级列表</a>
                     <a  th:href="@{/classRoom/list}"><i class="icon-chevron-right"></i>教室列表</a>
-                    <a  th:href="@{/config/list}"><i class="icon-chevron-right"></i>配置列表</a>
+                    <a  th:href="@{/staff/list}"><i class="icon-chevron-right"></i>学生列表</a>
+                    <!--<a  th:href="@{/config/list}"><i class="icon-chevron-right"></i>配置列表</a>-->
                 </li>
             </ul>
         </div>
@@ -36,29 +37,39 @@
                         <div class="muted pull-left">部门列表</div>
                     </div>
 
-                    <form th:action="@{/upload/uploadCSV}" enctype="multipart/form-data" method="post" >
+                    <form th:action="@{/upload/uploadCSV}" enctype="multipart/form-data" method="post" class="form-horizontal">
                         <div class="btn-group">
                             <div class="controls">
                                 <div class="uploader" id="uniform-fileInput"><input class="input-file uniform_on" id="fileInput" name="file" type="file" /><span class="filename" style="user-select: none;">No file selected</span><span class="action" style="user-select: none;">选择文件(CSV)</span></div>
+                                <button type="submit" class="btn btn-primary">上传</button>
                             </div>
                         </div>
+                    </form>
+                    <form th:action="@{/staff/list}" method="post" class="form-horizontal">
                         <div class="control-group">
                             <div class="controls">
-                                <select class="span6 m-wrap" id="importDepId" name="importDepId" style="width: 13%;">
-                                    <option th:each="dep : ${deps}" th:value="${dep.id}" th:text="${dep.name}"></option>
+                                班级：
+                                <select class="span6 m-wrap" id="depId" name="depId" style="width: 13%;">
+                                    <option value="">--请选择--</option>
+                                    <option th:each="dep : ${deps}" th:value="${dep.id}" th:text="${dep.name}" th:selected="${depId == dep.id}"></option>
+                                </select>
+
+                                教室：
+                                <select class="span6 m-wrap" id="roomId" name="roomId" style="width: 13%;">
+                                    <option value="">--请选择--</option>
+                                    <option th:each="room : ${rooms}" th:value="${room.id}" th:text="${room.name}" th:selected="${roomId == room.id}"></option>
                                 </select>
                             </div>
                         </div>
-                        <div class="">
-                            <button type="submit" class="btn btn-primary">上传</button>
+                        <div class="btn-group">
+                            &nbsp; <a href="#" th:href="@{/staff/list}"><button class="btn btn-warning">查询<i class="icon-search icon-white"></i></button></a>
                         </div>
                     </form>
                     <div class="block-content collapse in">
                         <div class="span12">
                             <div class="table-toolbar">
                                 <div class="btn-group">
-                                    <a href="#" th:href="@{/staff/create(depId=${depId})}"><button class="btn btn-success">新增<i class="icon-plus icon-white"></i></button></a>
-                                    &nbsp; <a href="#" th:href="@{/dep/list}"><button class="btn btn-info">返回<i class="icon-th-list icon-white"></i></button></a>
+                                    <a href="#" th:href="@{/staff/create}"><button class="btn btn-success">新增<i class="icon-plus icon-white"></i></button></a>
                                 </div>
                             </div>
                             <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="example2">
@@ -66,7 +77,9 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>班级</th>
+                                    <th>教室</th>
                                     <th>姓名</th>
+                                    <th>辅导类型</th>
                                     <th>性别</th>
                                     <th>地址</th>
                                     <th>电话</th>
@@ -80,8 +93,10 @@
                                 <tbody>
                                 <tr class="gradeX" th:each="staff,state : ${staffs}">
                                     <td class="center" th:number="${staff.id}">1</td>
-                                    <td class="center" th:text="${staff.department.name}">开发部</td>
+                                    <td class="center" th:text="${staff.department.name}"></td>
+                                    <td class="center" th:text="${staff.classRoom.name}"></td>
                                     <td class="center" th:text="${staff.name}">张三</td>
+                                    <td class="center" th:text="${staff.fudaoType}"></td>
                                     <td class="center" th:text="${staff.sex == 1 ? '男' : '女'}">男</td>
                                     <td class="center" th:text="${staff.address}"></td>
                                     <td class="center" th:text="${staff.telephone}"></td>
@@ -90,8 +105,8 @@
                                     <td class="center" th:text="${staff.description}"></td>
                                     <td class="center" th:text="${#dates.format(staff.createTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
                                     <td><a href="#" th:href="@{/staff/create(depId=${depId})}">新增</a>
-                                        <a href="update.html" th:href="@{/staff/update(id=${staff.id},depId=${depId})}">修改</a>
-                                        <a href="#" th:href="@{/staff/delete(id=${staff.id},depId=${depId})}">删除</a>
+                                        <a href="update.html" th:href="@{/staff/update(id=${staff.id})}">修改</a>
+                                        <a href="#" th:href="@{/staff/delete(id=${staff.id})}">删除</a>
                                                 <!--<a href="#" th:href="@{/staff/checkIn(id=${staff.id})}">签到</a>-->
                                     </td>
                                 </tr>

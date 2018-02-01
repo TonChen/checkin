@@ -22,7 +22,8 @@
                 <li>
                     <a  th:href="@{/dep/list}"><i class="icon-chevron-right"></i>班级列表</a>
                     <a  th:href="@{/classRoom/list}"><i class="icon-chevron-right"></i>教室列表</a>
-                    <a  th:href="@{/config/list}"><i class="icon-chevron-right"></i>配置列表</a>
+                    <a  th:href="@{/staff/list}"><i class="icon-chevron-right"></i>学生列表</a>
+                    <!--<a  th:href="@{/config/list}"><i class="icon-chevron-right"></i>配置列表</a>-->
                 </li>
             </ul>
         </div>
@@ -56,13 +57,13 @@
                                         </div>
                                     </div>
                                     <div class="control-group">
-                                        <label class="control-label">名称</label>
+                                        <label class="control-label">名称<span class="required">*</span></label>
                                         <div class="controls">
                                             <input type="text" name="name" th:value="${room.name}" data-required="1" class="span6 m-wrap"/>
                                         </div>
                                     </div>
                                     <div class="control-group">
-                                        <label class="control-label">备注<span class="required">*</span></label>
+                                        <label class="control-label">备注</label>
                                         <div class="controls">
                                             <input name="description" th:value="${room.description}" type="text" class="span6 m-wrap"/>
                                         </div>

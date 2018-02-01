@@ -2,6 +2,7 @@ package com.fredchen.checkin.web;
 
 import com.fredchen.checkin.base.BaseController;
 import com.fredchen.checkin.domain.Staff;
+import com.fredchen.checkin.service.IClassRoomService;
 import com.fredchen.checkin.service.IDepartmentService;
 import com.fredchen.checkin.service.IStaffService;
 import lombok.NonNull;
@@ -27,14 +28,19 @@ public class StaffController extends BaseController {
     private IStaffService staffService;
     @Autowired
     private IDepartmentService departmentService;
+    @Autowired
+    private IClassRoomService classRoomService;
 
-    @GetMapping("/list")
-    public Object list(@RequestParam(name = "depId", defaultValue = "1") Integer depId, Model model){
+    @RequestMapping("/list")
+    public Object list(@RequestParam(name = "depId", required = false) Integer depId, @RequestParam(required = false) Integer roomId, Model model){
         val deps = departmentService.findByIsDel(false);
-        val staffs = staffService.withDepartmentId(depId);
+        val rooms = classRoomService.findByIsDel(false);
+        val staffs = staffService.withDepartmentId(depId, roomId);
         model.addAttribute("deps", deps);
         model.addAttribute("staffs", staffs);
+        model.addAttribute("rooms", rooms);
         model.addAttribute("depId", depId);
+        model.addAttribute("roomId", roomId);
 
         return "staff/list";
     }
@@ -42,7 +48,7 @@ public class StaffController extends BaseController {
     @RequestMapping("/show")
     public String show(@RequestParam(name = "depId", required = false) Integer depId, Model model) {
         val deps = departmentService.findByIsDel(false);
-        val staffs = staffService.withDepartmentId(depId);
+        val staffs = staffService.withDepartmentId(depId, null);
         model.addAttribute("deps", deps);
         model.addAttribute("staffs", staffs);
         model.addAttribute("depId", depId);
@@ -50,35 +56,40 @@ public class StaffController extends BaseController {
     }
 
     @GetMapping("/create")
-    public String create(Model model, @RequestParam("depId") @NonNull Integer depId) {
+    public String create(Model model) {
         val deps = departmentService.findByIsDel(false);
+        val rooms = classRoomService.findByIsDel(false);
         model.addAttribute("deps", deps);
-        model.addAttribute("depId", depId);
+        model.addAttribute("rooms", rooms);
         return "staff/create";
     }
 
     @GetMapping("/update")
-    public String update(@RequestParam(name = "id") Integer id, Model model, @RequestParam("depId") Integer depId) {
+    public String update(@RequestParam(name = "id") Integer id, Model model) {
         val staff = staffService.findById(id);
         val deps = departmentService.findByIsDel(false);
+        val rooms = classRoomService.findByIsDel(false);
         model.addAttribute("deps", deps);
+        model.addAttribute("rooms", rooms);
         model.addAttribute("staff", staff);
-        model.addAttribute("depId", depId);
         return "staff/update";
     }
 
     @PostMapping("/saveOrUpdate")
-    public String saveOrUpdate(Staff staff, @RequestParam("depId") Integer depId, @RequestParam("departmentId") Integer departmentId) {
+    public String saveOrUpdate(Staff staff ,@RequestParam("departmentId") Integer departmentId, @RequestParam("classroomId") Integer classroomId) {
         val dep = departmentService.findById(departmentId);
+        val room = classRoomService.findById(classroomId);
         if(staff.getId() == null){
             staff.setIsDel(false);
             staff.setCreateTime(new Date());
             staff.setAbsence(false);
             staff.setCheckInTime(new Date());
             staff.setDepartment(dep);
+            staff.setClassRoom(room);
             staffService.save(staff);
         }else{
             val sta = staffService.findById(staff.getId());
+            sta.setClassRoom(room);
             sta.setDepartment(dep);
             sta.setDescription(staff.getDescription());
             sta.setName(staff.getName());
@@ -87,14 +98,14 @@ public class StaffController extends BaseController {
             sta.setTelephone(staff.getTelephone());
             staffService.update(sta);
         }
-        return "redirect:list?depId="+depId;
+        return "redirect:list?depId=";
     }
 
     @GetMapping("/delete")
     @Transactional
-    public String delete(@RequestParam("id") Integer id, @RequestParam("depId") Integer depId) {
+    public String delete(@RequestParam("id") Integer id) {
         staffService.deleteById(id);
-        return "redirect:list?depId="+depId;
+        return "redirect:list";
     }
 
     /**
